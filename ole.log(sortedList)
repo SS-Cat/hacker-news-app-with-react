@@ -1,0 +1,1146 @@
+[1mdiff --git a/package.json b/package.json[m
+[1mindex f120a64..2afbea1 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -3,6 +3,8 @@[m
+   "version": "0.1.0",[m
+   "private": true,[m
+   "dependencies": {[m
+[32m+[m[32m    "axios": "^0.18.0",[m
+[32m+[m[32m    "ramda": "^0.26.1",[m
+     "react": "^16.8.3",[m
+     "react-dom": "^16.8.3",[m
+     "react-scripts": "2.1.5"[m
+[36m@@ -21,5 +23,11 @@[m
+     "not dead",[m
+     "not ie <= 11",[m
+     "not op_mini all"[m
+[31m-  ][m
+[32m+[m[32m  ],[m
+[32m+[m[32m  "devDependencies": {[m
+[32m+[m[32m    "enzyme": "^3.9.0",[m
+[32m+[m[32m    "enzyme-adapter-react-16": "^1.10.0",[m
+[32m+[m[32m    "react-addons-test-utils": "^15.6.2",[m
+[32m+[m[32m    "react-test-renderer": "^16.8.3"[m
+[32m+[m[32m  }[m
+ }[m
+[1mdiff --git a/public/index.html b/public/index.html[m
+[1mindex 75980d5..07cb167 100644[m
+[1m--- a/public/index.html[m
+[1m+++ b/public/index.html[m
+[36m@@ -22,7 +22,8 @@[m
+       work correctly both with client-side routing and a non-root public URL.[m
+       Learn how to configure a non-root public URL by running `npm run build`.[m
+     -->[m
+[31m-    <title>React App</title>[m
+[32m+[m[32m    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">[m
+[32m+[m[32m    <title>Hacker News App</title>[m
+   </head>[m
+   <body>[m
+     <noscript>You need to enable JavaScript to run this app.</noscript>[m
+[1mdiff --git a/src/App.css b/src/App.css[m
+[1mindex b41d297..a505701 100644[m
+[1m--- a/src/App.css[m
+[1m+++ b/src/App.css[m
+[36m@@ -1,33 +1,63 @@[m
+[31m-.App {[m
+[32m+[m[32m.page {[m
+[32m+[m[32m  margin: 20px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.interactions {[m
+   text-align: center;[m
+ }[m
+ [m
+[31m-.App-logo {[m
+[31m-  animation: App-logo-spin infinite 20s linear;[m
+[31m-  height: 40vmin;[m
+[31m-  pointer-events: none;[m
+[32m+[m[32m.table {[m
+[32m+[m[32m  margin: 20px 0;[m
+ }[m
+ [m
+[31m-.App-header {[m
+[31m-  background-color: #282c34;[m
+[31m-  min-height: 100vh;[m
+[32m+[m[32m.table-header {[m
+   display: flex;[m
+[31m-  flex-direction: column;[m
+[31m-  align-items: center;[m
+[31m-  justify-content: center;[m
+[31m-  font-size: calc(10px + 2vmin);[m
+[31m-  color: white;[m
+[32m+[m[32m  line-height: 24px;[m
+[32m+[m[32m  font-size: 16px;[m
+[32m+[m[32m  padding: 0 10px;[m
+[32m+[m[32m  justify-content: space-between;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.table-empty {[m
+[32m+[m[32m  margin: 200px;[m
+[32m+[m[32m  text-align: center;[m
+[32m+[m[32m  font-size: 16px;[m
+ }[m
+ [m
+[31m-.App-link {[m
+[31m-  color: #61dafb;[m
+[32m+[m[32m.table-row {[m
+[32m+[m[32m  display: flex;[m
+[32m+[m[32m  line-height: 24px;[m
+[32m+[m[32m  white-space: nowrap;[m
+[32m+[m[32m  margin: 10px 0;[m
+[32m+[m[32m  padding: 10px;[m
+[32m+[m[32m  background: #ffffff;[m
+[32m+[m[32m  border: 1px solid #e3e3e3;[m
+ }[m
+ [m
+[31m-@keyframes App-logo-spin {[m
+[31m-  from {[m
+[31m-    transform: rotate(0deg);[m
+[31m-  }[m
+[31m-  to {[m
+[31m-    transform: rotate(360deg);[m
+[31m-  }[m
+[32m+[m[32m.table-header > span {[m
+[32m+[m[32m  overflow: hidden;[m
+[32m+[m[32m  text-overflow: ellipsis;[m
+[32m+[m[32m  padding: 0 5px;[m
+ }[m
+[32m+[m
+[32m+[m[32m.table-row > span {[m
+[32m+[m[32m  overflow: hidden;[m
+[32m+[m[32m  text-overflow: ellipsis;[m
+[32m+[m[32m  padding: 0 5px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.button-inline {[m
+[32m+[m[32m  border-width: 0;[m
+[32m+[m[32m  background: transparent;[m
+[32m+[m[32m  color: inherit;[m
+[32m+[m[32m  text-align: inherit;[m
+[32m+[m[32m  -webkit-font-smoothing: inherit;[m
+[32m+[m[32m  padding: 0;[m
+[32m+[m[32m  font-size: inherit;[m
+[32m+[m[32m  cursor: pointer;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.button-active {[m
+[32m+[m[32m  border-radius: 0;[m
+[32m+[m[32m  border-bottom: 1px solid #38BB6C;[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/src/App.js b/src/App.js[m
+[1mindex 7e261ca..16fdd29 100644[m
+[1m--- a/src/App.js[m
+[1m+++ b/src/App.js[m
+[36m@@ -1,28 +1,289 @@[m
+ import React, { Component } from 'react';[m
+[31m-import logo from './logo.svg';[m
+[32m+[m[32mimport axios from 'axios';[m
+[32m+[m[32mimport * as R from 'ramda'[m
+ import './App.css';[m
+ [m
+[32m+[m[32mconst DEFAULT_QUERY = 'redux'[m
+[32m+[m[32mconst DEFAULT_HPP = '10'[m
+[32m+[m
+[32m+[m[32mconst PATH_BASE = 'https://hn.algolia.com/api/v1'[m
+[32m+[m[32mconst PATH_SEARCH = '/search'[m
+[32m+[m[32mconst PARAM_SEARCH = 'query='[m
+[32m+[m[32mconst PARAM_PAGE = 'page='[m
+[32m+[m[32mconst PARAM_HPP = 'hitsPerPage='[m
+[32m+[m
+[32m+[m[32mconst SORTS = {[m
+[32m+[m	[32mNONE: list => list,[m
+[32m+[m	[32mTITLE: list => R.sortBy(R.compose(R.toLower, R.prop('title')))(list),[m
+[32m+[m	[32mAUTHOR: list => R.sortBy(R.compose(R.toLower, R.prop('author')))(list),[m
+[32m+[m	[32mCOMMENTS: list => R.sortBy(R.compose(R.prop('num_comments')))(list).reverse(),[m
+[32m+[m	[32mPOINTS: list => R.sortBy(R.compose(R.prop('points')))(list).reverse()[m
+[32m+[m[32m}[m
+[32m+[m
+ class App extends Component {[m
+[32m+[m[32m  _isMounted = false[m
+[32m+[m[32m  constructor(props) {[m
+[32m+[m[32m    super(props)[m
+[32m+[m[32m    this.state = {[m
+[32m+[m[32m      results: null,[m
+[32m+[m[32m      searchKey: '',[m
+[32m+[m[32m      searchTerm: DEFAULT_QUERY,[m
+[32m+[m[32m      error: null,[m
+[32m+[m[32m      isLoading: false,[m
+[32m+[m[32m      sortKey: 'NONE',[m
+[32m+[m[32m      isSortReverse: false[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  setSearchTopStories = result => {[m
+[32m+[m[32m    const { hits, page } = result[m
+[32m+[m[32m    const { searchKey, results } = this.state[m
+[32m+[m
+[32m+[m[32m    const oldHits = results && results[searchKey][m
+[32m+[m[32m      ? results[searchKey].hits[m
+[32m+[m[32m      : [][m
+[32m+[m
+[32m+[m[32m    const updateHits = [[m
+[32m+[m[32m      ...oldHits,[m
+[32m+[m[32m      ...hits[m
+[32m+[m[32m    ][m
+[32m+[m
+[32m+[m[32m    this.setState({[m
+[32m+[m[32m      results: {[m
+[32m+[m[32m        ...results,[m
+[32m+[m[32m        [searchKey]: { hits: updateHits, page }[m
+[32m+[m[32m      },[m
+[32m+[m[32m      isLoading: false[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  fetchSearchTopStories = (searchTerm, page = 0) => {[m
+[32m+[m[32m    this.setState({ isLoading: true })[m
+[32m+[m[32m    axios(PATH_BASE + PATH_SEARCH + '?' + PARAM_SEARCH + searchTerm + '&' + PARAM_PAGE + page + '&' + PARAM_HPP + DEFAULT_HPP )[m
+[32m+[m[32m      .then(result => this.setSearchTopStories(result.data))[m
+[32m+[m[32m      .catch(error => this._isMounted && this.setState({error}))[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[41m  [m
+[32m+[m
+[32m+[m[32m  onSearchChange = event => {[m
+[32m+[m[32m    this.setState({ searchTerm: event.target.value })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  needsToSearchTopStories = searchTerm => {[m
+[32m+[m[32m    return !(this.state.results && this.state.results[searchTerm])[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  onSearchSubmit = event => {[m
+[32m+[m[32m    event.preventDefault()[m
+[32m+[m
+[32m+[m[32m    const { searchTerm } = this.state[m
+[32m+[m[32m    this.setState({ searchKey: searchTerm })[m
+[32m+[m[32m    if(this.needsToSearchTopStories(searchTerm)){[m
+[32m+[m[32m      this.fetchSearchTopStories(searchTerm)[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  onDismiss = id => {[m
+[32m+[m[32m    const { searchKey, results } = this.state[m
+[32m+[m[32m    const { hits, page } = results[searchKey][m
+[32m+[m
+[32m+[m[32m    const updateHits = hits.filter(item => item.objectID !== id)[m
+[32m+[m
+[32m+[m[32m    this.setState({[m
+[32m+[m[32m      results: {[m
+[32m+[m[32m        ...results,[m
+[32m+[m[32m        [searchKey]: { hits: updateHits, page }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    })[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  onSort = sortKey => {[m
+[32m+[m[41m  [m	[32mconst isSortReverse = this.state.sortKey === sortKey && !this.state.isSortReverse[m
+[32m+[m[41m  [m	[32mthis.setState({ sortKey, isSortReverse })[m
+[32m+[m[32m  }[m
+[32m+[m[41m	[m
+[32m+[m	[32mcomponentDidMount(){[m
+[32m+[m[32m    this._isMounted = true[m
+[32m+[m
+[32m+[m[32m    const { searchTerm } = this.state[m
+[32m+[m[32m    this.setState({ searchKey: searchTerm })[m
+[32m+[m[32m    this.fetchSearchTopStories(searchTerm)[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  componenetWillUnmount(){[m
+[32m+[m[32m    this._isMounted = false[m
+[32m+[m[32m  }[m
+[32m+[m
+   render() {[m
+[31m-    return ([m
+[31m-      <div className="App">[m
+[31m-        <header className="App-header">[m
+[31m-          <img src={logo} className="App-logo" alt="logo" />[m
+[31m-          <p>[m
+[31m-            Edit <code>src/App.js</code> and save to reload.[m
+[31m-          </p>[m
+[31m-          <a[m
+[31m-            className="App-link"[m
+[31m-            href="https://reactjs.org"[m
+[31m-            target="_blank"[m
+[31m-            rel="noopener noreferrer"[m
+[31m-          >[m
+[31m-            Learn React[m
+[31m-          </a>[m
+[31m-        </header>[m
+[31m-      </div>[m
+[31m-    );[m
+[32m+[m[32m    const { searchTerm, results, searchKey, error, isLoading, sortKey, isSortReverse } = this.state[m
+[32m+[m[32m    const page = (results && results[searchKey] && results[searchKey].page) || 0[m
+[32m+[m[32m    const list = (results && results[searchKey] && results[searchKey].hits) || [][m
+[32m+[m[32m    return([m
+[32m+[m[32m      <div className="page">[m
+[32m+[m[32m        <div className="interactions">[m
+[32m+[m[32m          <Search[m
+[32m+[m[32m            value={searchTerm}[m
+[32m+[m[32m            onChange={this.onSearchChange}[m
+[32m+[m[32m            onSubmit={this.onSearchSubmit}[m
+[32m+[m[32m          > Search </Search>[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m        { error[m
+[32m+[m[32m          ? <div className="interactions">[m
+[32m+[m[32m              <p>Something went wrong.</p>[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m          : <Table[m
+[32m+[m[32m              list={list}[m
+[32m+[m[32m              sortKey={sortKey}[m
+[32m+[m[32m              onSort={this.onSort}[m
+[32m+[m[32m              onDismiss={this.onDismiss}[m
+[32m+[m[32m              isSortReverse={isSortReverse}[m
+[32m+[m[32m            />[m
+[32m+[m[32m        }[m
+[32m+[m[32m        <div className="interactions">[m
+[32m+[m[41m        [m	[32m<ButtonWithLoading[m
+[32m+[m[41m        [m		[32misLoading={isLoading}[m
+[32m+[m[41m        [m		[32monClick={() => this.fetchSearchTopStories(searchKey, page + 1)}[m
+[32m+[m[41m        [m	[32m> More </ButtonWithLoading>[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m      </div>[m[41m      [m
+[32m+[m[32m    )[m
+   }[m
+ }[m
+ [m
+[32m+[m
+[32m+[m[32mclass Search extends Component {[m
+[32m+[m	[32mcomponenetDidMount(){[m
+[32m+[m		[32mif(this.input){[m
+[32m+[m			[32mthis.input.focus()[m
+[32m+[m		[32m}[m
+[32m+[m	[32m}[m
+[32m+[m[32m  render(){[m
+[32m+[m[41m  [m	[32mconst { value, onChange, onSubmit, children } = this.props[m
+[32m+[m[32m    return([m
+[32m+[m[41m    [m	[32m<form onSubmit={onSubmit}>[m
+[32m+[m[41m    [m	[32m  <input[m
+[32m+[m[41m    [m	[32m    type="text"[m
+[32m+[m[41m    [m	[32m    value={value}[m
+[32m+[m[41m    [m	[32m    onChange={onChange}[m
+[32m+[m[41m    [m	[32m    ref={(node) => { this.input = node }}[m
+[32m+[m[41m    [m	[32m  />[m
+[32m+[m[41m    [m	[32m  <button type="submit">[m
+[32m+[m[41m    [m	[32m    {children}[m
+[32m+[m[41m    [m	[32m  </button>[m
+[32m+[m[41m    [m	[32m</form>[m
+[32m+[m[32m    )[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m}[m
+[32m+[m[41m  [m
+[32m+[m
+[32m+[m[32mconst Table = ({ list, onDismiss, sortKey, onSort, isSortReverse}) => {[m
+[32m+[m	[32mconst sortedList = SORTS[sortKey](list)[m
+[32m+[m	[32mconst reverseSortedList = ([m
+[32m+[m			[32misSortReverse[m
+[32m+[m			[32m? sortedList.reverse()[m
+[32m+[m			[32m: sortedList[m
+[32m+[m	[32m)[m
+[32m+[m
+[32m+[m	[32mreturn([m
+[32m+[m	[32m  <div className="table">[m
+[32m+[m	[41m  [m	[32m<div className="table-header">[m
+[32m+[m	[41m  [m		[32m<span style={{width: '40%'}} >[m
+[32m+[m	[41m  [m			[32m<Sort[m
+[32m+[m	[41m  [m				[32msortKey={'TITLE'}[m
+[32m+[m	[41m  [m				[32monSort={onSort}[m
+[32m+[m	[41m  [m				[32mactiveSortKey={sortKey}[m
+[32m+[m	[41m  [m			[32m> Title </Sort>[m
+[32m+[m	[41m  [m		[32m</span>[m
+[32m+[m	[41m  [m		[32m<span style={{width: '30%'}} >[m
+[32m+[m	[41m  [m			[32m<Sort[m
+[32m+[m	[41m  [m				[32msortKey={'AUTHOR'}[m
+[32m+[m	[41m  [m				[32monSort={onSort}[m
+[32m+[m	[41m  [m				[32mactiveSortKey={sortKey}[m
+[32m+[m	[41m  [m			[32m> Author </Sort>[m
+[32m+[m	[41m  [m		[32m</span>[m
+[32m+[m	[41m  [m		[32m<span style={{width: '10%'}} >[m
+[32m+[m	[41m  [m			[32m<Sort[m
+[32m+[m	[41m  [m				[32msortKey={'COMMENTS'}[m
+[32m+[m	[41m  [m				[32monSort={onSort}[m
+[32m+[m	[41m  [m				[32mactiveSortKey={sortKey}[m
+[32m+[m	[41m  [m			[32m> Comments </Sort>[m
+[32m+[m	[41m  [m		[32m</span>[m
+[32m+[m	[41m  [m		[32m<span style={{width: '10%'}} >[m
+[32m+[m	[41m  [m			[32m<Sort[m
+[32m+[m	[41m  [m				[32msortKey={'POINTS'}[m
+[32m+[m	[41m  [m				[32monSort={onSort}[m
+[32m+[m	[41m  [m				[32mactiveSortKey={sortKey}[m
+[32m+[m	[41m  [m			[32m> Points </Sort>[m
+[32m+[m	[41m  [m		[32m</span>[m
+[32m+[m	[41m  [m		[32m<span style={{width: '10%'}} >[m
+[32m+[m	[41m  [m			[32mArchive[m
+[32m+[m	[41m  [m		[32m</span>[m
+[32m+[m	[41m  [m	[32m</div>[m
+[32m+[m	[32m    { reverseSortedList.map(item =>[m[41m [m
+[32m+[m	[32m        <div key={item.objectID} className="table-row">[m
+[32m+[m	[32m          <span style={{ width: '40%'}}>[m
+[32m+[m	[32m            <a href={item.url}>{item.title}</a>[m
+[32m+[m	[32m          </span>[m
+[32m+[m	[32m          <span style={{ width: '30%'}}>[m
+[32m+[m	[32m            {item.author}[m
+[32m+[m	[32m          </span>[m
+[32m+[m	[32m          <span style={{ width: '10%'}}>[m
+[32m+[m	[32m            {item.num_comments}[m
+[32m+[m	[32m          </span>[m
+[32m+[m	[32m          <span style={{ width: '10%'}}>[m
+[32m+[m	[32m            {item.points}[m
+[32m+[m	[32m          </span>[m
+[32m+[m	[32m          <span style={{ width: '10%'}}>[m
+[32m+[m	[32m            <Button[m
+[32m+[m	[32m              onClick={() => onDismiss(item.objectID)}[m
+[32m+[m	[32m              className="button-inline"[m
+[32m+[m	[32m            > Dismiss </Button>[m
+[32m+[m	[32m          </span>[m
+[32m+[m	[32m        </div>[m
+[32m+[m	[32m      )[m
+[32m+[m	[32m    }[m
+[32m+[m	[32m  </div>)[m
+[32m+[m[32m}[m
+[32m+[m[32mconst Sort = ({ sortKey, onSort, children, activeSortKey }) => {[m
+[32m+[m	[32mconst sortClass = ['button-inline'][m
+[32m+[m	[32mif(sortKey === activeSortKey){[m
+[32m+[m		[32msortClass.push('button-active')[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mreturn ([m
+[32m+[m		[32m<Button[m[41m [m
+[32m+[m			[32monClick={() => onSort(sortKey)}[m[41m [m
+[32m+[m			[32mclassName={sortClass.join(' ')}[m
+[32m+[m		[32m>[m
+[32m+[m			[32m{children}[m
+[32m+[m		[32m</Button>[m
+[32m+[m	[32m)[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mconst Button = ({ onClick, className='', children }) =>[m
+[32m+[m[32m  <button[m
+[32m+[m[32m    onClick={onClick}[m
+[32m+[m[32m    className={className}[m
+[32m+[m[32m    type="button"[m
+[32m+[m[32m  > {children} </button>[m
+[32m+[m
+[32m+[m[32mconst Loading = () =>[m
+[32m+[m[41m [m	[32m<i className="fas fa-spinner fa-spin"/>[m
+[32m+[m
+[32m+[m[32mconst withLoading = Component => ({ isLoading, ...rest }) =>[m
+[32m+[m	[32misLoading[m
+[32m+[m	[32m?	<Loading/>[m
+[32m+[m	[32m: <Component { ...rest } />[m
+[32m+[m
+[32m+[m[32mconst ButtonWithLoading = withLoading(Button)[m
+[32m+[m
+ export default App;[m
+[32m+[m
+[32m+[m[32mexport {[m
+[32m+[m[32m  Button,[m
+[32m+[m[32m  Search,[m
+[32m+[m[32m  Table[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/src/App.test.js b/src/App.test.js[m
+[1mindex a754b20..cd7ee6a 100644[m
+[1m--- a/src/App.test.js[m
+[1m+++ b/src/App.test.js[m
+[36m@@ -1,9 +1,80 @@[m
+ import React from 'react';[m
+ import ReactDOM from 'react-dom';[m
+[31m-import App from './App';[m
+[32m+[m[32mimport renderer from 'react-test-renderer'[m
+[32m+[m[32mimport Enzyme, { shallow } from 'enzyme'[m
+[32m+[m[32mimport Adapter from 'enzyme-adapter-react-16'[m
+[32m+[m[32mimport App, { Search, Button, Table } from './App';[m
+ [m
+[31m-it('renders without crashing', () => {[m
+[31m-  const div = document.createElement('div');[m
+[31m-  ReactDOM.render(<App />, div);[m
+[31m-  ReactDOM.unmountComponentAtNode(div);[m
+[31m-});[m
+[32m+[m[32mEnzyme.configure({ adapter: new Adapter() })[m
+[32m+[m
+[32m+[m[32mdescribe('App', () => {[m
+[32m+[m[41m	[m
+[32m+[m	[32mit('renders without crashing', () => {[m
+[32m+[m	[32m  const div = document.createElement('div');[m
+[32m+[m	[32m  ReactDOM.render(<App />, div);[m
+[32m+[m	[32m  ReactDOM.unmountComponentAtNode(div);[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32mtest('has a valid snapshot', () => {[m
+[32m+[m		[32mconst component = renderer.create(<App/>)[m
+[32m+[m		[32mconst tree = component.toJSON()[m
+[32m+[m		[32mexpect(tree).toMatchSnapshot()[m
+[32m+[m	[32m})[m
+[32m+[m[32m})[m
+[32m+[m
+[32m+[m[32mdescribe('Search', () => {[m
+[32m+[m[41m	[m
+[32m+[m	[32mit('renders without crashing', () => {[m
+[32m+[m	[32m  const div = document.createElement('div');[m
+[32m+[m	[32m  ReactDOM.render(<Search>Search</Search>, div);[m
+[32m+[m	[32m  ReactDOM.unmountComponentAtNode(div);[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32mtest('has a valid snapshot', () => {[m
+[32m+[m		[32mconst component = renderer.create(<Search>Search</Search>)[m
+[32m+[m		[32mconst tree = component.toJSON()[m
+[32m+[m		[32mexpect(tree).toMatchSnapshot()[m
+[32m+[m	[32m})[m
+[32m+[m[32m})[m
+[32m+[m
+[32m+[m[32mdescribe('Button', () => {[m
+[32m+[m[41m	[m
+[32m+[m	[32mit('renders without crashing', () => {[m
+[32m+[m	[32m  const div = document.createElement('div');[m
+[32m+[m	[32m  ReactDOM.render(<Button>Button</Button>, div);[m
+[32m+[m	[32m  ReactDOM.unmountComponentAtNode(div);[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32mtest('has a valid snapshot', () => {[m
+[32m+[m		[32mconst component = renderer.create(<Button>Button</Button>)[m
+[32m+[m		[32mconst tree = component.toJSON()[m
+[32m+[m		[32mexpect(tree).toMatchSnapshot()[m
+[32m+[m	[32m})[m
+[32m+[m[32m})[m
+[32m+[m
+[32m+[m[32mdescribe('Table', () => {[m
+[32m+[m[41m	[m
+[32m+[m	[32mconst props = {[m
+[32m+[m		[32mlist: [[m
+[32m+[m			[32m{title: '1', author: '1', num_comments: 1, points: 2, objectID: 'y'},[m
+[32m+[m			[32m{title: '2', author: '2', num_comments: 1, points: 2, objectID: 'x'}[m
+[32m+[m		[32m][m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mit('renders without crashing', () => {[m
+[32m+[m	[32m  const div = document.createElement('div');[m
+[32m+[m	[32m  ReactDOM.render(<Table {...props}/>, div);[m
+[32m+[m	[32m  ReactDOM.unmountComponentAtNode(div);[m
+[32m+[m	[32m});[m
+[32m+[m
+[32m+[m	[32mtest('has a valid snapshot', () => {[m
+[32m+[m		[32mconst component = renderer.create(<Table {...props}/>)[m
+[32m+[m		[32mconst tree = component.toJSON()[m
+[32m+[m		[32mexpect(tree).toMatchSnapshot()[m
+[32m+[m	[32m})[m
+[32m+[m
+[32m+[m	[32mtest('shows two items in list', () => {[m
+[32m+[m		[32mconst element = shallow(<Table {...props}/>)[m
+[32m+[m		[32mexpect(element.find('.table-row').length).toBe(2)[m
+[32m+[m	[32m})[m
+[32m+[m[32m})[m
+\ No newline at end of file[m
+[1mdiff --git a/src/index.css b/src/index.css[m
+[1mindex cee5f34..d0e1d2a 100644[m
+[1m--- a/src/index.css[m
+[1m+++ b/src/index.css[m
+[36m@@ -1,14 +1,44 @@[m
+ body {[m
+[31m-  margin: 0;[m
+[32m+[m[32m  color: #222;[m
+[32m+[m[32m  background: #f4f4f4;[m
+[32m+[m[32m  font: 400 14px CoreSans, Arial,sans-serif;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32ma {[m
+[32m+[m[32m  color: #222;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32ma:hover {[m
+[32m+[m[32m  text-decoration: underline;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mul, li {[m
+[32m+[m[32m  list-style: none;[m
+   padding: 0;[m
+[31m-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",[m
+[31m-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",[m
+[31m-    sans-serif;[m
+[31m-  -webkit-font-smoothing: antialiased;[m
+[31m-  -moz-osx-font-smoothing: grayscale;[m
+[32m+[m[32m  margin: 0;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32minput {[m
+[32m+[m[32m  padding: 10px;[m
+[32m+[m[32m  border-radius: 5px;[m
+[32m+[m[32m  outline: none;[m
+[32m+[m[32m  margin-right: 10px;[m
+[32m+[m[32m  border: 1px solid #dddddd;[m
+ }[m
+ [m
+[31m-code {[m
+[31m-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",[m
+[31m-    monospace;[m
+[32m+[m[32mbutton {[m
+[32m+[m[32m  padding: 10px;[m
+[32m+[m[32m  border-radius: 5px;[m
+[32m+[m[32m  border: 1px solid #dddddd;[m
+[32m+[m[32m  background: transparent;[m
+[32m+[m[32m  color: #808080;[m
+[32m+[m[32m  cursor: pointer;[m
+ }[m
+[32m+[m
+[32m+[m[32mbutton:hover {[m
+[32m+[m[32m  color: #222;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m*:focus {[m
+[32m+[m[32m  outline: none;[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/src/index.js b/src/index.js[m
+[1mindex 0c5e75d..42c9451 100644[m
+[1m--- a/src/index.js[m
+[1m+++ b/src/index.js[m
+[36m@@ -6,6 +6,10 @@[m [mimport * as serviceWorker from './serviceWorker';[m
+ [m
+ ReactDOM.render(<App />, document.getElementById('root'));[m
+ [m
+[32m+[m[32mif(module.hot){[m
+[32m+[m	[32mmodule.hot.accept()[m
+[32m+[m[32m}[m
+[32m+[m
+ // If you want your app to work offline and load faster, you can change[m
+ // unregister() to register() below. Note this comes with some pitfalls.[m
+ // Learn more about service workers: http://bit.ly/CRA-PWA[m
+[1mdiff --git a/yarn.lock b/yarn.lock[m
+[1mindex dd90178..2243efd 100644[m
+[1m--- a/yarn.lock[m
+[1m+++ b/yarn.lock[m
+[36m@@ -1263,6 +1263,11 @@[m [marray-equal@^1.0.0:[m
+   resolved "https://registry.yarnpkg.com/array-equal/-/array-equal-1.0.0.tgz#8c2a5ef2472fd9ea742b04c77a75093ba2757c93"[m
+   integrity sha1-jCpe8kcv2ep0KwTHenUJO6J1fJM=[m
+ [m
+[32m+[m[32marray-filter@^1.0.0:[m
+[32m+[m[32m  version "1.0.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/array-filter/-/array-filter-1.0.0.tgz#baf79e62e6ef4c2a4c0b831232daffec251f9d83"[m
+[32m+[m[32m  integrity sha1-uveeYubvTCpMC4MSMtr/7CUfnYM=[m
+[32m+[m
+ array-filter@~0.0.0:[m
+   version "0.0.1"[m
+   resolved "https://registry.yarnpkg.com/array-filter/-/array-filter-0.0.1.tgz#7da8cf2e26628ed732803581fd21f67cacd2eeec"[m
+[36m@@ -1318,6 +1323,15 @@[m [marray-unique@^0.3.2:[m
+   resolved "https://registry.yarnpkg.com/array-unique/-/array-unique-0.3.2.tgz#a894b75d4bc4f6cd679ef3244a9fd8f46ae2d428"[m
+   integrity sha1-qJS3XUvE9s1nnvMkSp/Y9Gri1Cg=[m
+ [m
+[32m+[m[32marray.prototype.flat@^1.2.1:[m
+[32m+[m[32m  version "1.2.1"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/array.prototype.flat/-/array.prototype.flat-1.2.1.tgz#812db8f02cad24d3fab65dd67eabe3b8903494a4"[m
+[32m+[m[32m  integrity sha512-rVqIs330nLJvfC7JqYvEWwqVr5QjYF1ib02i3YJtR/fICO6527Tjpc/e4Mvmxh3GIePPreRXMdaGyC99YphWEw==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    define-properties "^1.1.2"[m
+[32m+[m[32m    es-abstract "^1.10.0"[m
+[32m+[m[32m    function-bind "^1.1.1"[m
+[32m+[m
+ arrify@^1.0.1:[m
+   version "1.0.1"[m
+   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"[m
+[36m@@ -1425,6 +1439,14 @@[m [maws4@^1.8.0:[m
+   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"[m
+   integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==[m
+ [m
+[32m+[m[32maxios@^0.18.0:[m
+[32m+[m[32m  version "0.18.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"[m
+[32m+[m[32m  integrity sha1-MtU+SFHv3AoRmTts0AB4nXDAUQI=[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    follow-redirects "^1.3.0"[m
+[32m+[m[32m    is-buffer "^1.1.5"[m
+[32m+[m
+ axobject-query@^2.0.1:[m
+   version "2.0.2"[m
+   resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-2.0.2.tgz#ea187abe5b9002b377f925d8bf7d1c561adf38f9"[m
+[36m@@ -2096,6 +2118,18 @@[m [mcheck-types@^7.3.0:[m
+   resolved "https://registry.yarnpkg.com/check-types/-/check-types-7.4.0.tgz#0378ec1b9616ec71f774931a3c6516fad8c152f4"[m
+   integrity sha512-YbulWHdfP99UfZ73NcUDlNJhEIDgm9Doq9GhpyXbF+7Aegi3CVV7qqMCKTTqJxlvEvnQBp9IA+dxsGN6xK/nSg==[m
+ [m
+[32m+[m[32mcheerio@^1.0.0-rc.2:[m
+[32m+[m[32m  version "1.0.0-rc.2"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.2.tgz#4b9f53a81b27e4d5dac31c0ffd0cfa03cc6830db"[m
+[32m+[m[32m  integrity sha1-S59TqBsn5NXawxwP/Qz6A8xoMNs=[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    css-select "~1.2.0"[m
+[32m+[m[32m    dom-serializer "~0.1.0"[m
+[32m+[m[32m    entities "~1.1.1"[m
+[32m+[m[32m    htmlparser2 "^3.9.1"[m
+[32m+[m[32m    lodash "^4.15.0"[m
+[32m+[m[32m    parse5 "^3.0.1"[m
+[32m+[m
+ chokidar@^2.0.0, chokidar@^2.0.2, chokidar@^2.0.4:[m
+   version "2.1.0"[m
+   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.0.tgz#5fcb70d0b28ebe0867eb0f09d5f6a08f29a1efa0"[m
+[36m@@ -2303,7 +2337,7 @@[m [mcommander@2.17.x, commander@~2.17.1:[m
+   resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"[m
+   integrity sha512-wPMUt6FnH2yzG95SA6mzjQOEKUU3aLaDEmzs1ti+1E9h+CsrZghRlqEM/EJ4KscsQVG8uNN4uVreUeT8+drlgg==[m
+ [m
+[31m-commander@^2.11.0:[m
+[32m+[m[32mcommander@^2.11.0, commander@^2.19.0:[m
+   version "2.19.0"[m
+   resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"[m
+   integrity sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==[m
+[36m@@ -2590,7 +2624,7 @@[m [mcss-select-base-adapter@~0.1.0:[m
+   resolved "https://registry.yarnpkg.com/css-select-base-adapter/-/css-select-base-adapter-0.1.1.tgz#3b2ff4972cc362ab88561507a95408a1432135d7"[m
+   integrity sha512-jQVeeRG70QI08vSTwf1jHxp74JoZsr2XSgETae8/xC8ovSnL2WF87GTLO86Sbwdt2lK4Umg4HnnwMO4YF3Ce7w==[m
+ [m
+[31m-css-select@^1.1.0:[m
+[32m+[m[32mcss-select@^1.1.0, css-select@~1.2.0:[m
+   version "1.2.0"[m
+   resolved "https://registry.yarnpkg.com/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"[m
+   integrity sha1-KzoRBTnFNV8c2NMUYj6HCxIeyFg=[m
+[36m@@ -2797,7 +2831,7 @@[m [mdebug@=3.1.0:[m
+   dependencies:[m
+     ms "2.0.0"[m
+ [m
+[31m-debug@^3.1.0, debug@^3.2.5:[m
+[32m+[m[32mdebug@^3.1.0, debug@^3.2.5, debug@^3.2.6:[m
+   version "3.2.6"[m
+   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"[m
+   integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==[m
+[36m@@ -2979,6 +3013,11 @@[m [mdir-glob@2.0.0:[m
+     arrify "^1.0.1"[m
+     path-type "^3.0.0"[m
+ [m
+[32m+[m[32mdiscontinuous-range@1.0.0:[m
+[32m+[m[32m  version "1.0.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/discontinuous-range/-/discontinuous-range-1.0.0.tgz#e38331f0844bba49b9a9cb71c771585aab1bc65a"[m
+[32m+[m[32m  integrity sha1-44Mx8IRLukm5qctxx3FYWqsbxlo=[m
+[32m+[m
+ dns-equal@^1.0.0:[m
+   version "1.0.0"[m
+   resolved "https://registry.yarnpkg.com/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"[m
+[36m@@ -3029,12 +3068,20 @@[m [mdom-serializer@0:[m
+     domelementtype "~1.1.1"[m
+     entities "~1.1.1"[m
+ [m
+[32m+[m[32mdom-serializer@~0.1.0:[m
+[32m+[m[32m  version "0.1.1"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-0.1.1.tgz#1ec4059e284babed36eec2941d4a970a189ce7c0"[m
+[32m+[m[32m  integrity sha512-l0IU0pPzLWSHBcieZbpOKgkIn3ts3vAh7ZuFyXNwJxJXk/c4Gwj9xaTJwIDVQCXawWD0qb3IzMGH5rglQaO0XA==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    domelementtype "^1.3.0"[m
+[32m+[m[32m    entities "^1.1.1"[m
+[32m+[m
+ domain-browser@^1.1.1:[m
+   version "1.2.0"[m
+   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"[m
+   integrity sha512-jnjyiM6eRyZl2H+W8Q/zLMA481hzi0eszAaBUzIVnmYVDBbnLxVNnfu1HgEBvCbL+71FrxMl3E6lpKH7Ge3OXA==[m
+ [m
+[31m-domelementtype@1:[m
+[32m+[m[32mdomelementtype@1, domelementtype@^1.3.0, domelementtype@^1.3.1:[m
+   version "1.3.1"[m
+   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.3.1.tgz#d048c44b37b0d10a7f2a3d5fee3f4333d790481f"[m
+   integrity sha512-BSKB+TSpMpFI/HOxCNr1O8aMOTZ8hT3pM3GQ0w/mWRmkhEDSFJkkyzz4XQsBV44BChwGkrDfMyjVD0eA2aFV3w==[m
+[36m@@ -3058,6 +3105,13 @@[m [mdomhandler@2.1:[m
+   dependencies:[m
+     domelementtype "1"[m
+ [m
+[32m+[m[32mdomhandler@^2.3.0:[m
+[32m+[m[32m  version "2.4.2"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-2.4.2.tgz#8805097e933d65e85546f726d60f5eb88b44f803"[m
+[32m+[m[32m  integrity sha512-JiK04h0Ht5u/80fdLMCEmV4zkNh2BcoMFBmZ/91WtYZ8qVXSKjiw7fXMgFPnHcSZgOo3XdinHvmnDUeMf5R4wA==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    domelementtype "1"[m
+[32m+[m
+ domutils@1.1:[m
+   version "1.1.6"[m
+   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.1.6.tgz#bddc3de099b9a2efacc51c623f28f416ecc57485"[m
+[36m@@ -3073,7 +3127,7 @@[m [mdomutils@1.5.1:[m
+     dom-serializer "0"[m
+     domelementtype "1"[m
+ [m
+[31m-domutils@^1.7.0:[m
+[32m+[m[32mdomutils@^1.5.1, domutils@^1.7.0:[m
+   version "1.7.0"[m
+   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.7.0.tgz#56ea341e834e06e6748af7a1cb25da67ea9f8c2a"[m
+   integrity sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==[m
+[36m@@ -3180,11 +3234,61 @@[m [menhanced-resolve@^4.1.0:[m
+     memory-fs "^0.4.0"[m
+     tapable "^1.0.0"[m
+ [m
+[31m-entities@~1.1.1:[m
+[32m+[m[32mentities@^1.1.1, entities@~1.1.1:[m
+   version "1.1.2"[m
+   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"[m
+   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==[m
+ [m
+[32m+[m[32menzyme-adapter-react-16@^1.10.0:[m
+[32m+[m[32m  version "1.10.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.10.0.tgz#12e5b6f4be84f9a2ef374acc2555f829f351fc6e"[m
+[32m+[m[32m  integrity sha512-0QqwEZcBv1xEEla+a3H7FMci+y4ybLia9cZzsdIrId7qcig4MK0kqqf6iiCILH1lsKS6c6AVqL3wGPhCevv5aQ==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    enzyme-adapter-utils "^1.10.0"[m
+[32m+[m[32m    object.assign "^4.1.0"[m
+[32m+[m[32m    object.values "^1.1.0"[m
+[32m+[m[32m    prop-types "^15.6.2"[m
+[32m+[m[32m    react-is "^16.7.0"[m
+[32m+[m[32m    react-test-renderer "^16.0.0-0"[m
+[32m+[m
+[32m+[m[32menzyme-adapter-utils@^1.10.0:[m
+[32m+[m[32m  version "1.10.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.10.0.tgz#5836169f68b9e8733cb5b69cad5da2a49e34f550"[m
+[32m+[m[32m  integrity sha512-VnIXJDYVTzKGbdW+lgK8MQmYHJquTQZiGzu/AseCZ7eHtOMAj4Rtvk8ZRopodkfPves0EXaHkXBDkVhPa3t0jA==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    function.prototype.name "^1.1.0"[m
+[32m+[m[32m    object.assign "^4.1.0"[m
+[32m+[m[32m    object.fromentries "^2.0.0"[m
+[32m+[m[32m    prop-types "^15.6.2"[m
+[32m+[m[32m    semver "^5.6.0"[m
+[32m+[m
+[32m+[m[32menzyme@^3.9.0:[m
+[32m+[m[32m  version "3.9.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.9.0.tgz#2b491f06ca966eb56b6510068c7894a7e0be3909"[m
+[32m+[m[32m  integrity sha512-JqxI2BRFHbmiP7/UFqvsjxTirWoM1HfeaJrmVSZ9a1EADKkZgdPcAuISPMpoUiHlac9J4dYt81MC5BBIrbJGMg==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    array.prototype.flat "^1.2.1"[m
+[32m+[m[32m    cheerio "^1.0.0-rc.2"[m
+[32m+[m[32m    function.prototype.name "^1.1.0"[m
+[32m+[m[32m    has "^1.0.3"[m
+[32m+[m[32m    html-element-map "^1.0.0"[m
+[32m+[m[32m    is-boolean-object "^1.0.0"[m
+[32m+[m[32m    is-callable "^1.1.4"[m
+[32m+[m[32m    is-number-object "^1.0.3"[m
+[32m+[m[32m    is-regex "^1.0.4"[m
+[32m+[m[32m    is-string "^1.0.4"[m
+[32m+[m[32m    is-subset "^0.1.1"[m
+[32m+[m[32m    lodash.escape "^4.0.1"[m
+[32m+[m[32m    lodash.isequal "^4.5.0"[m
+[32m+[m[32m    object-inspect "^1.6.0"[m
+[32m+[m[32m    object-is "^1.0.1"[m
+[32m+[m[32m    object.assign "^4.1.0"[m
+[32m+[m[32m    object.entries "^1.0.4"[m
+[32m+[m[32m    object.values "^1.0.4"[m
+[32m+[m[32m    raf "^3.4.0"[m
+[32m+[m[32m    rst-selector-parser "^2.2.3"[m
+[32m+[m[32m    string.prototype.trim "^1.1.2"[m
+[32m+[m
+ errno@^0.1.3, errno@~0.1.7:[m
+   version "0.1.7"[m
+   resolved "https://registry.yarnpkg.com/errno/-/errno-0.1.7.tgz#4684d71779ad39af177e3f007996f7c67c852618"[m
+[36m@@ -3199,7 +3303,7 @@[m [merror-ex@^1.2.0, error-ex@^1.3.1:[m
+   dependencies:[m
+     is-arrayish "^0.2.1"[m
+ [m
+[31m-es-abstract@^1.11.0, es-abstract@^1.12.0, es-abstract@^1.5.1, es-abstract@^1.7.0:[m
+[32m+[m[32mes-abstract@^1.10.0, es-abstract@^1.11.0, es-abstract@^1.12.0, es-abstract@^1.5.0, es-abstract@^1.5.1, es-abstract@^1.7.0:[m
+   version "1.13.0"[m
+   resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.13.0.tgz#ac86145fdd5099d8dd49558ccba2eaf9b88e24e9"[m
+   integrity sha512-vDZfg/ykNxQVwup/8E1BZhVzFfBxs9NqMzGcvIJrqg5k2/5Za2bWo40dK2J1pgLngZ7c+Shh8lwYtLGyrwPutg==[m
+[36m@@ -3857,6 +3961,13 @@[m [mfollow-redirects@^1.0.0:[m
+   dependencies:[m
+     debug "=3.1.0"[m
+ [m
+[32m+[m[32mfollow-redirects@^1.3.0:[m
+[32m+[m[32m  version "1.7.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.7.0.tgz#489ebc198dc0e7f64167bd23b03c4c19b5784c76"[m
+[32m+[m[32m  integrity sha512-m/pZQy4Gj287eNy94nivy5wchN3Kp+Q5WgUPNy5lJSZ3sgkVKSYV/ZChMAQVIgx1SqfZ2zBZtPA2YlXIWxxJOQ==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    debug "^3.2.6"[m
+[32m+[m
+ for-in@^0.1.3:[m
+   version "0.1.8"[m
+   resolved "https://registry.yarnpkg.com/for-in/-/for-in-0.1.8.tgz#d8773908e31256109952b1fdb9b3fa867d2775e1"[m
+[36m@@ -3990,11 +4101,20 @@[m [mfsevents@^1.2.3, fsevents@^1.2.7:[m
+     nan "^2.9.2"[m
+     node-pre-gyp "^0.10.0"[m
+ [m
+[31m-function-bind@^1.1.1:[m
+[32m+[m[32mfunction-bind@^1.0.2, function-bind@^1.1.1:[m
+   version "1.1.1"[m
+   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"[m
+   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==[m
+ [m
+[32m+[m[32mfunction.prototype.name@^1.1.0:[m
+[32m+[m[32m  version "1.1.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/function.prototype.name/-/function.prototype.name-1.1.0.tgz#8bd763cc0af860a859cc5d49384d74b932cd2327"[m
+[32m+[m[32m  integrity sha512-Bs0VRrTz4ghD8pTmbJQD1mZ8A/mN0ur/jGz+A6FBxPDUPkm1tNfF6bhTYPA7i7aF4lZJVr+OXTNNrnnIl58Wfg==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    define-properties "^1.1.2"[m
+[32m+[m[32m    function-bind "^1.1.1"[m
+[32m+[m[32m    is-callable "^1.1.3"[m
+[32m+[m
+ functional-red-black-tree@^1.0.1:[m
+   version "1.0.1"[m
+   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"[m
+[36m@@ -4364,6 +4484,13 @@[m [mhtml-comment-regex@^1.1.0:[m
+   resolved "https://registry.yarnpkg.com/html-comment-regex/-/html-comment-regex-1.1.2.tgz#97d4688aeb5c81886a364faa0cad1dda14d433a7"[m
+   integrity sha512-P+M65QY2JQ5Y0G9KKdlDpo0zK+/OHptU5AaBwUfAIDJZk1MYf32Frm84EcOytfJE0t5JvkAnKlmjsXDnWzCJmQ==[m
+ [m
+[32m+[m[32mhtml-element-map@^1.0.0:[m
+[32m+[m[32m  version "1.0.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/html-element-map/-/html-element-map-1.0.0.tgz#19a41940225153ecdfead74f8509154ff1cdc18b"[m
+[32m+[m[32m  integrity sha512-/SP6aOiM5Ai9zALvCxDubIeez0LvG3qP7R9GcRDnJEP/HBmv0A8A9K0o8+HFudcFt46+i921ANjzKsjPjb7Enw==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    array-filter "^1.0.0"[m
+[32m+[m
+ html-encoding-sniffer@^1.0.2:[m
+   version "1.0.2"[m
+   resolved "https://registry.yarnpkg.com/html-encoding-sniffer/-/html-encoding-sniffer-1.0.2.tgz#e70d84b94da53aa375e11fe3a351be6642ca46f8"[m
+[36m@@ -4402,6 +4529,18 @@[m [mhtml-webpack-plugin@4.0.0-alpha.2:[m
+     tapable "^1.0.0"[m
+     util.promisify "1.0.0"[m
+ [m
+[32m+[m[32mhtmlparser2@^3.9.1:[m
+[32m+[m[32m  version "3.10.1"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.10.1.tgz#bd679dc3f59897b6a34bb10749c855bb53a9392f"[m
+[32m+[m[32m  integrity sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    domelementtype "^1.3.1"[m
+[32m+[m[32m    domhandler "^2.3.0"[m
+[32m+[m[32m    domutils "^1.5.1"[m
+[32m+[m[32m    entities "^1.1.1"[m
+[32m+[m[32m    inherits "^2.0.1"[m
+[32m+[m[32m    readable-stream "^3.1.1"[m
+[32m+[m
+ htmlparser2@~3.3.0:[m
+   version "3.3.0"[m
+   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.3.0.tgz#cc70d05a59f6542e43f0e685c982e14c924a9efe"[m
+[36m@@ -4733,6 +4872,11 @@[m [mis-binary-path@^1.0.0:[m
+   dependencies:[m
+     binary-extensions "^1.0.0"[m
+ [m
+[32m+[m[32mis-boolean-object@^1.0.0:[m
+[32m+[m[32m  version "1.0.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/is-boolean-object/-/is-boolean-object-1.0.0.tgz#98f8b28030684219a95f375cfbd88ce3405dff93"[m
+[32m+[m[32m  integrity sha1-mPiygDBoQhmpXzdc+9iM40Bd/5M=[m
+[32m+[m
+ is-buffer@^1.0.2, is-buffer@^1.1.5:[m
+   version "1.1.6"[m
+   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"[m
+[36m@@ -4743,7 +4887,7 @@[m [mis-buffer@^2.0.0:[m
+   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-2.0.3.tgz#4ecf3fcf749cbd1e472689e109ac66261a25e725"[m
+   integrity sha512-U15Q7MXTuZlrbymiz95PJpZxu8IlipAp4dtS3wOdgPXx3mqBnslrWU14kxfHB+Py/+2PVKSr37dMAgM2A4uArw==[m
+ [m
+[31m-is-callable@^1.1.4:[m
+[32m+[m[32mis-callable@^1.1.3, is-callable@^1.1.4:[m
+   version "1.1.4"[m
+   resolved "https://registry.yarnpkg.com/is-callable/-/is-callable-1.1.4.tgz#1e1adf219e1eeb684d691f9d6a05ff0d30a24d75"[m
+   integrity sha512-r5p9sxJjYnArLjObpjA4xu5EKI3CuKHkJXMhT7kwbpUyIFD1n5PMAsoPvWnvtZiNz7LjkYDRZhd7FlI0eMijEA==[m
+[36m@@ -4888,6 +5032,11 @@[m [mis-glob@^4.0.0:[m
+   dependencies:[m
+     is-extglob "^2.1.1"[m
+ [m
+[32m+[m[32mis-number-object@^1.0.3:[m
+[32m+[m[32m  version "1.0.3"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/is-number-object/-/is-number-object-1.0.3.tgz#f265ab89a9f445034ef6aff15a8f00b00f551799"[m
+[32m+[m[32m  integrity sha1-8mWrian0RQNO9q/xWo8AsA9VF5k=[m
+[32m+[m
+ is-number@^2.1.0:[m
+   version "2.1.0"[m
+   resolved "https://registry.yarnpkg.com/is-number/-/is-number-2.1.0.tgz#01fcbbb393463a548f2f466cce16dece49db908f"[m
+[36m@@ -4985,6 +5134,16 @@[m [mis-stream@^1.1.0:[m
+   resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"[m
+   integrity sha1-EtSj3U5o4Lec6428hBc66A2RykQ=[m
+ [m
+[32m+[m[32mis-string@^1.0.4:[m
+[32m+[m[32m  version "1.0.4"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/is-string/-/is-string-1.0.4.tgz#cc3a9b69857d621e963725a24caeec873b826e64"[m
+[32m+[m[32m  integrity sha1-zDqbaYV9Yh6WNyWiTK7shzuCbmQ=[m
+[32m+[m
+[32m+[m[32mis-subset@^0.1.1:[m
+[32m+[m[32m  version "0.1.1"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/is-subset/-/is-subset-0.1.1.tgz#8a59117d932de1de00f245fcdd39ce43f1e939a6"[m
+[32m+[m[32m  integrity sha1-ilkRfZMt4d4A8kX83TnOQ/HpOaY=[m
+[32m+[m
+ is-svg@^3.0.0:[m
+   version "3.0.0"[m
+   resolved "https://registry.yarnpkg.com/is-svg/-/is-svg-3.0.0.tgz#9321dbd29c212e5ca99c4fa9794c714bcafa2f75"[m
+[36m@@ -5791,6 +5950,21 @@[m [mlodash.camelcase@^4.3.0:[m
+   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"[m
+   integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=[m
+ [m
+[32m+[m[32mlodash.escape@^4.0.1:[m
+[32m+[m[32m  version "4.0.1"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/lodash.escape/-/lodash.escape-4.0.1.tgz#c9044690c21e04294beaa517712fded1fa88de98"[m
+[32m+[m[32m  integrity sha1-yQRGkMIeBClL6qUXcS/e0fqI3pg=[m
+[32m+[m
+[32m+[m[32mlodash.flattendeep@^4.4.0:[m
+[32m+[m[32m  version "4.4.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"[m
+[32m+[m[32m  integrity sha1-+wMJF/hqMTTlvJvsDWngAT3f7bI=[m
+[32m+[m
+[32m+[m[32mlodash.isequal@^4.5.0:[m
+[32m+[m[32m  version "4.5.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"[m
+[32m+[m[32m  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=[m
+[32m+[m
+ lodash.memoize@^4.1.2:[m
+   version "4.1.2"[m
+   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"[m
+[36m@@ -5826,7 +6000,7 @@[m [mlodash.uniq@^4.5.0:[m
+   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"[m
+   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=[m
+ [m
+[31m-"lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5:[m
+[32m+[m[32m"lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5:[m
+   version "4.17.11"[m
+   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"[m
+   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==[m
+[36m@@ -6153,6 +6327,11 @@[m [mmkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@[m
+   dependencies:[m
+     minimist "0.0.8"[m
+ [m
+[32m+[m[32mmoo@^0.4.3:[m
+[32m+[m[32m  version "0.4.3"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/moo/-/moo-0.4.3.tgz#3f847a26f31cf625a956a87f2b10fbc013bfd10e"[m
+[32m+[m[32m  integrity sha512-gFD2xGCl8YFgGHsqJ9NKRVdwlioeW3mI1iqfLNYQOv0+6JRwG58Zk9DIGQgyIaffSYaO1xsKnMaYzzNr1KyIAw==[m
+[32m+[m
+ move-concurrently@^1.0.1:[m
+   version "1.0.1"[m
+   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"[m
+[36m@@ -6220,6 +6399,17 @@[m [mnatural-compare@^1.4.0:[m
+   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"[m
+   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=[m
+ [m
+[32m+[m[32mnearley@^2.7.10:[m
+[32m+[m[32m  version "2.16.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/nearley/-/nearley-2.16.0.tgz#77c297d041941d268290ec84b739d0ee297e83a7"[m
+[32m+[m[32m  integrity sha512-Tr9XD3Vt/EujXbZBv6UAHYoLUSMQAxSsTnm9K3koXzjzNWY195NqALeyrzLZBKzAkL3gl92BcSogqrHjD8QuUg==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    commander "^2.19.0"[m
+[32m+[m[32m    moo "^0.4.3"[m
+[32m+[m[32m    railroad-diagrams "^1.0.0"[m
+[32m+[m[32m    randexp "0.4.6"[m
+[32m+[m[32m    semver "^5.4.1"[m
+[32m+[m
+ needle@^2.2.1:[m
+   version "2.2.4"[m
+   resolved "https://registry.yarnpkg.com/needle/-/needle-2.2.4.tgz#51931bff82533b1928b7d1d69e01f1b00ffd2a4e"[m
+[36m@@ -6440,6 +6630,16 @@[m [mobject-hash@^1.1.4:[m
+   resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-1.3.1.tgz#fde452098a951cb145f039bb7d455449ddc126df"[m
+   integrity sha512-OSuu/pU4ENM9kmREg0BdNrUDIl1heYa4mBZacJc+vVWz4GtAwu7jO8s4AIt2aGRUTqxykpWzI3Oqnsm13tTMDA==[m
+ [m
+[32m+[m[32mobject-inspect@^1.6.0:[m
+[32m+[m[32m  version "1.6.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.6.0.tgz#c70b6cbf72f274aab4c34c0c82f5167bf82cf15b"[m
+[32m+[m[32m  integrity sha512-GJzfBZ6DgDAmnuaM3104jR4s1Myxr3Y3zfIyN4z3UdqN69oSRacNK8UhnobDdC+7J2AHCjGwxQubNJfE70SXXQ==[m
+[32m+[m
+[32m+[m[32mobject-is@^1.0.1:[m
+[32m+[m[32m  version "1.0.1"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/object-is/-/object-is-1.0.1.tgz#0aa60ec9989a0b3ed795cf4d06f62cf1ad6539b6"[m
+[32m+[m[32m  integrity sha1-CqYOyZiaCz7Xlc9NBvYs8a1lObY=[m
+[32m+[m
+ object-keys@^1.0.11, object-keys@^1.0.12:[m
+   version "1.1.0"[m
+   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.0.tgz#11bd22348dd2e096a045ab06f6c85bcc340fa032"[m
+[36m@@ -6462,6 +6662,16 @@[m [mobject.assign@^4.1.0:[m
+     has-symbols "^1.0.0"[m
+     object-keys "^1.0.11"[m
+ [m
+[32m+[m[32mobject.entries@^1.0.4:[m
+[32m+[m[32m  version "1.1.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/object.entries/-/object.entries-1.1.0.tgz#2024fc6d6ba246aee38bdb0ffd5cfbcf371b7519"[m
+[32m+[m[32m  integrity sha512-l+H6EQ8qzGRxbkHOd5I/aHRhHDKoQXQ8g0BYt4uSweQU1/J6dZUOyWh9a2Vky35YCKjzmgxOzta2hH6kf9HuXA==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    define-properties "^1.1.3"[m
+[32m+[m[32m    es-abstract "^1.12.0"[m
+[32m+[m[32m    function-bind "^1.1.1"[m
+[32m+[m[32m    has "^1.0.3"[m
+[32m+[m
+ object.fromentries@^2.0.0:[m
+   version "2.0.0"[m
+   resolved "https://registry.yarnpkg.com/object.fromentries/-/object.fromentries-2.0.0.tgz#49a543d92151f8277b3ac9600f1e930b189d30ab"[m
+[36m@@ -6495,7 +6705,7 @@[m [mobject.pick@^1.3.0:[m
+   dependencies:[m
+     isobject "^3.0.1"[m
+ [m
+[31m-object.values@^1.0.4:[m
+[32m+[m[32mobject.values@^1.0.4, object.values@^1.1.0:[m
+   version "1.1.0"[m
+   resolved "https://registry.yarnpkg.com/object.values/-/object.values-1.1.0.tgz#bf6810ef5da3e5325790eaaa2be213ea84624da9"[m
+   integrity sha512-8mf0nKLAoFX6VlNVdhGj31SVYpaNFtUnuoOXWyFEstsWRgU837AK+JYM0iAxwkSzGRbwn8cbFmgbyxj1j4VbXg==[m
+[36m@@ -6747,6 +6957,13 @@[m [mparse5@4.0.0:[m
+   resolved "https://registry.yarnpkg.com/parse5/-/parse5-4.0.0.tgz#6d78656e3da8d78b4ec0b906f7c08ef1dfe3f608"[m
+   integrity sha512-VrZ7eOd3T1Fk4XWNXMgiGBK/z0MG48BWG2uQNU4I72fkQuKUTZpl+u9k+CxEG0twMVzSmXEEz12z5Fnw1jIQFA==[m
+ [m
+[32m+[m[32mparse5@^3.0.1:[m
+[32m+[m[32m  version "3.0.3"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/parse5/-/parse5-3.0.3.tgz#042f792ffdd36851551cf4e9e066b3874ab45b5c"[m
+[32m+[m[32m  integrity sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    "@types/node" "*"[m
+[32m+[m
+ parse5@^5.0.0:[m
+   version "5.1.0"[m
+   resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.0.tgz#c59341c9723f414c452975564c7c00a68d58acd2"[m
+[36m@@ -7743,13 +7960,31 @@[m [mquerystringify@^2.0.0:[m
+   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.0.tgz#7ded8dfbf7879dcc60d0a644ac6754b283ad17ef"[m
+   integrity sha512-sluvZZ1YiTLD5jsqZcDmFyV2EwToyXZBfpoVOmktMmW+VEnhgakFHnasVph65fOjGPTWN0Nw3+XQaSeMayr0kg==[m
+ [m
+[31m-raf@3.4.1:[m
+[32m+[m[32mraf@3.4.1, raf@^3.4.0:[m
+   version "3.4.1"[m
+   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"[m
+   integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==[m
+   dependencies:[m
+     performance-now "^2.1.0"[m
+ [m
+[32m+[m[32mrailroad-diagrams@^1.0.0:[m
+[32m+[m[32m  version "1.0.0"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/railroad-diagrams/-/railroad-diagrams-1.0.0.tgz#eb7e6267548ddedfb899c1b90e57374559cddb7e"[m
+[32m+[m[32m  integrity sha1-635iZ1SN3t+4mcG5Dlc3RVnN234=[m
+[32m+[m
+[32m+[m[32mramda@^0.26.1:[m
+[32m+[m[32m  version "0.26.1"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"[m
+[32m+[m[32m  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==[m
+[32m+[m
+[32m+[m[32mrandexp@0.4.6:[m
+[32m+[m[32m  version "0.4.6"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/randexp/-/randexp-0.4.6.tgz#e986ad5e5e31dae13ddd6f7b3019aa7c87f60ca3"[m
+[32m+[m[32m  integrity sha512-80WNmd9DA0tmZrw9qQa62GPPWfuXJknrmVmLcxvq4uZBdYqb1wYoKTmnlGUchvVWe0XiLupYkBoXVOxz3C8DYQ==[m
+[32m+[m[32m  dependencies:[m
+[32m+[m[32m    discontinuous-range "1.0.0"[m
+[32m+[m[32m    ret "~0.1.10"[m
+[32m+[m
+ randomatic@^3.0.0:[m
+   version "3.1.1"[m
+   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-3.1.1.tgz#b776efc59375984e36c537b2f51a1f0aff0da1ed"[m
+[36m@@ -7799,6 +8034,11 @@[m [mrc@^1.2.7:[m
+     minimist "^1.2.0"[m
+     strip-json-comments "~2.0.1"[m
+ [m
+[32m+[m[32mreact-addons-test-utils@^15.6.2:[m
+[32m+[m[32m  version "15.6.2"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.6.2.tgz#c12b6efdc2247c10da7b8770d185080a7b047156"[m
+[32m+[m[32m  integrity sha1-wStu/cIkfBDae4dw0YUICnsEcVY=[m
+[32m+[m
+ react-app-polyfill@^0.2.1:[m
+   version "0.2.1"[m
+   resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-0.2.1.tgz#96c701a40b9671c8547f70bdbb4a47f4d5767790"[m
+[36m@@ -7840,7 +8080,7 @@[m [mreact-dev-utils@^7.0.3:[m
+     strip-ansi "5.0.0"[m
+     text-table "0.2.0"[m
+ [m
+[31m-react-dom@16.8.3:[m
+[32m+[m[32mreact-dom@^16.8.3:[m
+   version "16.8.3"[m
+   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.3.tgz#ae236029e66210783ac81999d3015dfc475b9c32"[m
+   integrity sha512-ttMem9yJL4/lpItZAQ2NTFAbV7frotHk5DZEHXUOws2rMmrsvh1Na7ThGT0dTzUIl6pqTOi5tYREfL8AEna3lA==[m
+[36m@@ -7855,6 +8095,11 @@[m [mreact-error-overlay@^5.1.3:[m
+   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.3.tgz#16fcbde75ed4dc6161dc6dc959b48e92c6ffa9ad"[m
+   integrity sha512-GoqeM3Xadie7XUApXOjkY3Qhs8RkwB/Za4WMedBGrOKH1eTuKGyoAECff7jiVonJchOx6KZ9i8ILO5XIoHB+Tg==[m
+ [m
+[32m+[m[32mreact-is@^16.7.0, react-is@^16.8.3:[m
+[32m+[m[32m  version "16.8.3"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"[m
+[32m+[m[32m  integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==[m
+[32m+[m
+ react-is@^16.8.1:[m
+   version "16.8.1"[m
+   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.1.tgz#a80141e246eb894824fb4f2901c0c50ef31d4cdb"[m
+[36m@@ -7915,7 +8160,17 @@[m [mreact-scripts@2.1.5:[m
+   optionalDependencies:[m
+     fsevents "1.2.4"[m
+ [m
+[31m-react@16.8.3:[m
+[32m+[m[32mreact-test-renderer@^16.0.0-0, react-test-renderer@^16.8.3:[m
+[32m+[m[32m  version "16.8.3"[m
+[32m+[m[32m  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.8.3.tgz#230006af264cc46aeef94392e04747c21839e05e"[m
+[32m+[m[32m  integrity sha512-rjJGYebduKNZH0k1bUivVrRLX04JfIQ0FKJLPK10TAb06XWhfi4gTobooF9K/DEFNW98iGac3OSxkfIJUN9Mdg==[m
+[32m+[m[32m  dep
